@@ -3,7 +3,9 @@ import { Metadata } from "next";
 import { notFound } from "next/navigation";
 
 import { InvoiceData } from "@/interfaces/containers.pay-invoice-page-interfaces";
+
 import { getInvoiceByNumber } from "@/database/database";
+
 import PayInvoicePage from "@/containers/pay-invoice-page";
 
 export const metadata: Metadata = {
@@ -12,14 +14,12 @@ export const metadata: Metadata = {
     "Securely pay your invoice through our encrypted checkout system.",
 };
 
-interface PayInvoiceProps {
-  params: { invoiceNumber: string };
-  searchParams?: Record<string, string | string[] | undefined>;
-}
-
-export default async function PayInvoice({ params }: PayInvoiceProps) {
+export default async function PayInvoice(
+  // eslint-disable-next-line @typescript-eslint/no-explicit-any
+  props: any
+) {
+  const { params } = props as { params: { invoiceNumber: string } };
   const invoice = await getInvoiceByNumber(params.invoiceNumber);
-
   if (!invoice) notFound();
 
   const transformedInvoice: InvoiceData = {

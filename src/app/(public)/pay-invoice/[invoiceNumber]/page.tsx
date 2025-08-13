@@ -1,6 +1,3 @@
-// eslint-disable-next-line @typescript-eslint/ban-ts-comment
-// @ts-nocheck
-
 import React from "react";
 import { Metadata } from "next";
 import { notFound } from "next/navigation";
@@ -18,9 +15,10 @@ type PageProps = {
   searchParams?: { [key: string]: string | string[] | undefined };
 };
 
-export async function generateMetadata({
-  params,
-}: PageProps): Promise<Metadata> {
+export async function generateMetadata(
+  // eslint-disable-next-line @typescript-eslint/no-explicit-any
+  { params }: any
+): Promise<Metadata> {
   const { invoiceNumber } = params;
   const invoice = await getInvoiceByNumber(invoiceNumber);
 

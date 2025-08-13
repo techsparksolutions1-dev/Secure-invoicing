@@ -1,20 +1,11 @@
 import type { Metadata, Viewport } from "next";
-import { Inter } from "next/font/google";
 import { Toaster } from "sonner";
+import { inter } from "@/fonts";
 
 import { GetPageMetadata } from "@/utils/meta-data";
 
 // STYLE SHEETS SOURCE
 import "../styles/globals.css";
-
-// FONT CONFIGURATIONS
-export const inter = Inter({
-  subsets: ["latin"],
-  variable: "--font-inter",
-  display: "swap",
-  weight: ["100", "200", "300", "400", "500", "600", "700", "800", "900"],
-  style: ["normal", "italic"],
-});
 
 // WEBSITE METADATA AND VIEWPORT
 export const metadata: Metadata = GetPageMetadata();

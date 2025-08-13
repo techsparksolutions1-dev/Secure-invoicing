@@ -12,18 +12,15 @@ export const metadata: Metadata = {
     "Securely pay your invoice through our encrypted checkout system.",
 };
 
-type PageProps = {
+interface PayInvoiceProps {
   params: { invoiceNumber: string };
-  searchParams?: { [key: string]: string | string[] | undefined };
-};
+  searchParams?: Record<string, string | string[] | undefined>;
+}
 
-export default async function PayInvoice({ params }: PageProps) {
-  const { invoiceNumber } = params;
-  const invoice = await getInvoiceByNumber(invoiceNumber);
+export default async function PayInvoice({ params }: PayInvoiceProps) {
+  const invoice = await getInvoiceByNumber(params.invoiceNumber);
 
-  if (!invoice) {
-    notFound();
-  }
+  if (!invoice) notFound();
 
   const transformedInvoice: InvoiceData = {
     id: invoice.id,
@@ -42,7 +39,7 @@ export default async function PayInvoice({ params }: PageProps) {
 
   return (
     <PayInvoicePage
-      invoiceNumber={invoiceNumber}
+      invoiceNumber={params.invoiceNumber}
       invoice={transformedInvoice}
     />
   );

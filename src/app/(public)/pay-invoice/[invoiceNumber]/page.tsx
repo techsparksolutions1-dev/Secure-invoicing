@@ -3,38 +3,19 @@ import { Metadata } from "next";
 import { notFound } from "next/navigation";
 
 import { InvoiceData } from "@/interfaces/containers.pay-invoice-page-interfaces";
-
 import { getInvoiceByNumber } from "@/database/database";
-
 import PayInvoicePage from "@/containers/pay-invoice-page";
 
-import { GetPageMetadata } from "@/utils/meta-data";
+export const metadata: Metadata = {
+  title: "Pay Invoice | Code Aura - Secure Invoicing",
+  description:
+    "Securely pay your invoice through our encrypted checkout system.",
+};
 
 type PageProps = {
   params: { invoiceNumber: string };
   searchParams?: { [key: string]: string | string[] | undefined };
 };
-
-export async function generateMetadata(
-  // eslint-disable-next-line @typescript-eslint/no-explicit-any
-  { params }: any
-): Promise<Metadata> {
-  const { invoiceNumber } = params;
-  const invoice = await getInvoiceByNumber(invoiceNumber);
-
-  if (!invoice) {
-    return GetPageMetadata({
-      title: "Invoice Not Found | Code Aura",
-      description: "The requested invoice could not be found.",
-      robots: { index: false, follow: false },
-    });
-  }
-
-  return GetPageMetadata({
-    title: `Pay Invoice #${invoiceNumber} | Code Aura - Secure Invoicing`,
-    description: `Secure payment for invoice #${invoiceNumber}. Complete your payment quickly and safely through our encrypted checkout system.`,
-  });
-}
 
 export default async function PayInvoice({ params }: PageProps) {
   const { invoiceNumber } = params;

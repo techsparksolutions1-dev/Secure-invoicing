@@ -64,4 +64,4 @@ export default async function PayInvoice({ params }: PageProps) {
       invoice={transformedInvoice}
     />
   );
-}
+} 

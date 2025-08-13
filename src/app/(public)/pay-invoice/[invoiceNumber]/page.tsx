@@ -9,24 +9,23 @@ import { getInvoiceByNumber } from "@/database/database";
 import { GetPageMetadata } from "@/utils/meta-data";
 
 interface PageProps {
-  params: { invoiceNumber: string };
+  params: {
+    invoiceNumber: string;
+  };
+  searchParams?: { [key: string]: string | string[] | undefined };
 }
 
 export async function generateMetadata({
   params,
 }: PageProps): Promise<Metadata> {
   const { invoiceNumber } = params;
-
   const invoice = await getInvoiceByNumber(invoiceNumber);
 
   if (!invoice) {
     return GetPageMetadata({
       title: "Invoice Not Found | Code Aura",
       description: "The requested invoice could not be found.",
-      robots: {
-        index: false,
-        follow: false,
-      },
+      robots: { index: false, follow: false },
     });
   }
 
@@ -38,7 +37,6 @@ export async function generateMetadata({
 
 export default async function PayInvoice({ params }: PageProps) {
   const { invoiceNumber } = params;
-
   const invoice = await getInvoiceByNumber(invoiceNumber);
 
   if (!invoice) {

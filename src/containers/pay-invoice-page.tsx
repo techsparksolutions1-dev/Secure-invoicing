@@ -32,10 +32,15 @@ import {
 
 import { IoMdCloseCircle } from "react-icons/io";
 
-function PayInvoicePage({ invoiceNumber }: PayInvoicePageInterface) {
-  const [isLoading, setIsLoading] = useState(true);
+function PayInvoicePage({
+  invoiceNumber,
+  invoice: prefetchedInvoice,
+}: PayInvoicePageInterface) {
+  const [isLoading, setIsLoading] = useState(!prefetchedInvoice);
   const [paymentProcessing, setPaymentProcessing] = useState(false);
-  const [invoiceData, setInvoiceData] = useState<InvoiceData | null>(null);
+  const [invoiceData, setInvoiceData] = useState<InvoiceData | null>(
+    prefetchedInvoice || null
+  );
   const [error, setError] = useState<string | null>(null);
 
   const router = useRouter();
@@ -77,10 +82,15 @@ function PayInvoicePage({ invoiceNumber }: PayInvoicePageInterface) {
       }
     };
 
-    if (invoiceNumber) {
+    if (prefetchedInvoice) {
+      setIsLoading(false);
+      return;
+    }
+
+    if (invoiceNumber && !prefetchedInvoice) {
       fetchInvoiceData();
     }
-  }, [invoiceNumber]);
+  }, [invoiceNumber, prefetchedInvoice]);
 
   // HANDLE PAYPAL ORDER CREATION
   const createOrder = async (
@@ -216,11 +226,11 @@ function PayInvoicePage({ invoiceNumber }: PayInvoicePageInterface) {
         <span className="text-primary">Complete Your Checkout</span>
       </h1>
 
-      <Separator className="mt-7 border-border" />
+      <Separator className="mt-7 border-border max-md:mb-7" />
 
-      <div className="grid md:grid-cols-3 md:mt-8 gap-16 md:items-center">
-        <div className="md:col-span-2 col-span-1 md:order-1 order-2">
-          <div className="mb-8">
+      <div className="grid xl:grid-cols-3 grid-cols-1 md:mt-8 gap-16 md:items-center">
+        <div className="xl:col-span-2 col-span-1 xl:order-1 order-2">
+          <div className="mb-8 max-xl:hidden">
             <h2 className="text-2xl font-semibold mb-4 text-heading">
               Pay for Your Invoice
             </h2>
@@ -246,7 +256,9 @@ function PayInvoicePage({ invoiceNumber }: PayInvoicePageInterface) {
                     }}
                   >
                     <PayPalButtons
-                      style={{ layout: "vertical" }}
+                      style={{
+                        layout: "vertical",
+                      }}
                       disabled={paymentProcessing}
                       createOrder={createOrder}
                       onApprove={onApprove}
@@ -276,8 +288,19 @@ function PayInvoicePage({ invoiceNumber }: PayInvoicePageInterface) {
           </div>
         </div>
 
-        <div className="col-span-1 md:order-2 order-1">
-          <Card className="border-border sticky top-6">
+        <div className="col-span-1 xl:order-2 order-1">
+          <div className="mb-8 xl:hidden">
+            <h2 className="text-2xl font-semibold mb-2 text-heading">
+              Pay for Your Invoice
+            </h2>
+            <p className="text-paragraph mb-6 text-sm">
+              You are making a secure payment to <strong>Code Aura</strong>.
+              Please review the invoice details on the right before proceeding.
+              Once payment is confirmed, a receipt will be emailed to you.
+            </p>
+          </div>
+
+          <Card className="border-border sticky top-6 max-xl:w-[500px] max-md:w-full">
             <CardHeader>
               <h3 className="text-2xl font-semibold text-heading">
                 Order Summary
@@ -295,7 +318,7 @@ function PayInvoicePage({ invoiceNumber }: PayInvoicePageInterface) {
 
             <Separator className="border-border w-[95%] mx-auto mb-4" />
 
-            <CardContent className="space-y-4 text-base">
+            <CardContent className="space-y-4 md:text-base text-sm">
               {isLoading ? (
                 <>
                   <Skeleton className="h-6 w-full bg-muted" />
@@ -355,7 +378,7 @@ function PayInvoicePage({ invoiceNumber }: PayInvoicePageInterface) {
 
             <Separator className="border-border w-[95%] mx-auto mb-4" />
 
-            <CardFooter className="flex justify-between text-lg font-semibold text-heading">
+            <CardFooter className="flex justify-between md:text-lg text-base font-semibold text-heading">
               {isLoading ? (
                 <Skeleton className="h-6 w-full bg-muted" />
               ) : invoiceData ? (

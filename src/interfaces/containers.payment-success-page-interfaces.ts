@@ -3,13 +3,12 @@ export interface InvoiceData {
   invoiceNumber: string;
   clientId: string;
   clientName: string;
-  clientPhoneNumber?: string;
+  clientPhoneNumber: string | null;
   clientEmailAddress: string;
   serviceTitle: string;
   serviceDescription: string;
   dueDate: string;
   totalAmount: number;
-  status: string;
   createdAt: string;
   paidAt?: string;
 }

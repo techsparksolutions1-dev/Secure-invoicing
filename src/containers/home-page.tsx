@@ -49,7 +49,7 @@ function HomePage() {
 
   return (
     <main className="layout-standard h-[80vh] flex-center">
-      <div className="grid grid-cols-2 gap-4">
+      <div className="grid md:grid-cols-2 gap-4">
         <Button
           onClick={() => handleNavigation("/generate-invoice")}
           className="h-[50px] w-[300px] font-semibold bg-secondary hover:bg-secondary-hover text-secondary-foreground text-base"

@@ -191,7 +191,7 @@ function ViewInvoicesPage() {
   }, []);
 
   return (
-    <main className="layout-standard section-padding-standard section-margin-standard">
+    <main className="layout-standard md:section-padding-standard section-margin-standard">
       <div className="flex flex-col gap-6">
         <div className="flex flex-col gap-4">
           <div className="flex items-center justify-between">
@@ -199,7 +199,7 @@ function ViewInvoicesPage() {
               <h1 className="text-3xl font-semibold text-heading">
                 View invoices
               </h1>
-              <p className="text-muted-foreground mt-2">
+              <p className="text-muted-foreground mt-2 max-md:hidden">
                 Manage & view all the unpaid invoices and their payment URLs.
               </p>
             </div>
@@ -256,22 +256,22 @@ function ViewInvoicesPage() {
                   <table className="w-full">
                     <thead className="border-b border-border">
                       <tr className="text-left">
-                        <th className="p-4 font-medium text-muted-foreground">
+                        <th className="p-4 font-medium text-muted-foreground whitespace-nowrap">
                           Invoice #
                         </th>
-                        <th className="p-4 font-medium text-muted-foreground">
+                        <th className="p-4 font-medium text-muted-foreground whitespace-nowrap">
                           Client
                         </th>
-                        <th className="p-4 font-medium text-muted-foreground">
+                        <th className="p-4 font-medium text-muted-foreground whitespace-nowrap">
                           Service
                         </th>
-                        <th className="p-4 font-medium text-muted-foreground">
+                        <th className="p-4 font-medium text-muted-foreground whitespace-nowrap">
                           Amount
                         </th>
-                        <th className="p-4 font-medium text-muted-foreground">
+                        <th className="p-4 font-medium text-muted-foreground whitespace-nowrap">
                           Created
                         </th>
-                        <th className="p-4 font-medium text-muted-foreground">
+                        <th className="p-4 font-medium text-muted-foreground whitespace-nowrap">
                           Actions
                         </th>
                       </tr>
@@ -282,12 +282,13 @@ function ViewInvoicesPage() {
                           key={invoice.id}
                           className="border-b border-border hover:bg-muted/50"
                         >
-                          <td className="p-4">
+                          <td className="p-4 whitespace-nowrap">
                             <code className="text-sm bg-muted px-2 py-1 rounded">
                               {invoice.invoiceNumber}
                             </code>
                           </td>
-                          <td className="p-4">
+
+                          <td className="p-4 whitespace-nowrap">
                             <div>
                               <div className="font-medium text-heading">
                                 {invoice.clientName}
@@ -297,7 +298,8 @@ function ViewInvoicesPage() {
                               </div>
                             </div>
                           </td>
-                          <td className="p-4">
+                          
+                          <td className="p-4 whitespace-nowrap">
                             <div className="max-w-xs">
                               <div className="font-medium text-heading truncate">
                                 {invoice.serviceTitle}
@@ -325,13 +327,16 @@ function ViewInvoicesPage() {
                               </div>
                             </div>
                           </td>
-                          <td className="p-4 font-medium text-heading">
+
+                          <td className="p-4 font-medium text-heading whitespace-nowrap">
                             {formatCurrency(invoice.totalAmount)}
                           </td>
-                          <td className="p-4 text-sm text-muted-foreground">
+
+                          <td className="p-4 text-sm text-muted-foreground whitespace-nowrap">
                             {formatDate(invoice.createdAt)}
                           </td>
-                          <td className="p-4">
+
+                          <td className="p-4 whitespace-nowrap">
                             <div className="flex items-center gap-2">
                               <Button
                                 onClick={() =>

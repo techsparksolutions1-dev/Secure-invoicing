@@ -187,7 +187,7 @@ function GenerateInvoiceForm() {
           className="w-full flex flex-col gap-12"
         >
           {/* CLIENT DETAILS */}
-          <div className="flex flex-col gap-4 mt-12">
+          <div className="flex flex-col gap-4 md:mt-12">
             <div className="flex flex-col gap-2">
               <h1 className="text-heading text-3xl font-semibold">
                 Client Details
@@ -195,7 +195,7 @@ function GenerateInvoiceForm() {
               <Separator />
             </div>
 
-            <div className="grid-cols-2 grid gap-4">
+            <div className="md:grid-cols-2 grid gap-4">
               <CustomInput
                 control={control}
                 name="clientId"
@@ -260,7 +260,7 @@ function GenerateInvoiceForm() {
               <Separator />
             </div>
 
-            <div className="grid-cols-2 grid gap-4">
+            <div className="md:grid-cols-2 grid gap-4">
               <CustomInput
                 control={control}
                 name="invoiceNumber"
@@ -280,18 +280,18 @@ function GenerateInvoiceForm() {
             <CustomInput
               control={control}
               name="totalAmount"
-              label="Total Amount (PKR)"
+              label="Total Amount (USD)"
               placeholder="Enter the total amount due"
             />
           </div>
 
           {/* FUNCTIONAL BUTTONS */}
-          <div className="w-full flex items-center gap-4 justify-end">
+          <div className="w-full flex md:flex-row flex-col items-center gap-2 justify-end">
             <Button
               type="button"
               onClick={handleReset}
               className={cn(
-                "w-[300px] md:h-[60px] h-[46px] text-base !rounded-[5px] hover:bg-secondary-hover bg-secondary text-secondary-foreground"
+                "md:w-[300px] w-full md:h-[60px] h-[46px] text-base !rounded-[5px] hover:bg-secondary-hover bg-secondary text-secondary-foreground md:order-1 order-2"
               )}
             >
               Reset Form
@@ -299,7 +299,7 @@ function GenerateInvoiceForm() {
 
             <Button
               className={cn(
-                "w-[300px] md:h-[60px] h-[46px] text-base text-primary-foreground !rounded-[5px] hover:bg-primary-hover bg-primary"
+                "md:w-[300px] w-full md:h-[60px] h-[46px] text-base text-primary-foreground !rounded-[5px] hover:bg-primary-hover bg-primary md:order-2 order-1"
               )}
               type="submit"
               disabled={loading}
@@ -318,8 +318,8 @@ function GenerateInvoiceForm() {
       </Form>
 
       {shareableUrl && (
-        <div className="w-full mt-[5rem] bg-muted rounded-lg p-4 flex items-center justify-between gap-4">
-          <div className="flex items-center gap-2 flex-1 min-w-0">
+        <div className="w-full md:mt-[5rem] mt-12 bg-muted rounded-lg p-4 flex items-center justify-between gap-4">
+          <div className="flex md:items-center md:flex-row flex-col gap-2 flex-1 min-w-0">
             <h1 className="font-bold uppercase tracking-wide flex-shrink-0">
               SHAREABLE URL:
             </h1>

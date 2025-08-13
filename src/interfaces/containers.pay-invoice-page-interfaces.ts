@@ -1,5 +1,6 @@
 export interface PayInvoicePageInterface {
-  invoiceNumber?: string;
+  invoiceNumber: string;
+  invoice?: InvoiceData;
 }
 
 export interface InvoiceData {
@@ -7,12 +8,12 @@ export interface InvoiceData {
   invoiceNumber: string;
   clientId: string;
   clientName: string;
-  clientPhoneNumber?: string;
+  clientPhoneNumber: string | null;
   clientEmailAddress: string;
   serviceTitle: string;
   serviceDescription: string;
   dueDate: string;
   totalAmount: number;
-  status: string;
   createdAt: string;
+  updatedAt: string;
 }

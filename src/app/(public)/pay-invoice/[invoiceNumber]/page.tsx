@@ -4,16 +4,16 @@ import { notFound } from "next/navigation";
 
 import { InvoiceData } from "@/interfaces/containers.pay-invoice-page-interfaces";
 
-import PayInvoicePage from "@/containers/pay-invoice-page";
 import { getInvoiceByNumber } from "@/database/database";
+
+import PayInvoicePage from "@/containers/pay-invoice-page";
+
 import { GetPageMetadata } from "@/utils/meta-data";
 
-interface PageProps {
-  params: {
-    invoiceNumber: string;
-  };
+type PageProps = {
+  params: { invoiceNumber: string };
   searchParams?: { [key: string]: string | string[] | undefined };
-}
+};
 
 export async function generateMetadata({
   params,
@@ -64,4 +64,4 @@ export default async function PayInvoice({ params }: PageProps) {
       invoice={transformedInvoice}
     />
   );
-} 
+}

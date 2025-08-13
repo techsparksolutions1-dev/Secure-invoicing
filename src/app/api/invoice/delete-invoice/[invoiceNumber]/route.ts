@@ -4,7 +4,8 @@ import { prisma } from "@/database/prisma";
 
 export async function DELETE(
   request: NextRequest,
-  { params }: { params: { invoiceNumber: string } }
+  // eslint-disable-next-line @typescript-eslint/no-explicit-any
+  { params }: { params: any }
 ) {
   try {
     const { invoiceNumber } = params;

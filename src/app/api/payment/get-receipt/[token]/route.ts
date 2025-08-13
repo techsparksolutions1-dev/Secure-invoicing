@@ -4,7 +4,8 @@ import { prisma } from "@/database/prisma";
 
 export async function GET(
   request: NextRequest,
-  { params }: { params: { token: string } }
+  // eslint-disable-next-line @typescript-eslint/no-explicit-any
+  { params }: { params: any }
 ) {
   try {
     const { token } = params;

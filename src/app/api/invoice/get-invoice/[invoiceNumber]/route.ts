@@ -4,7 +4,8 @@ import { getInvoiceByNumber } from "@/database/database";
 
 export async function GET(
   request: NextRequest,
-  { params }: { params: { invoiceNumber: string } }
+  // eslint-disable-next-line @typescript-eslint/no-explicit-any
+  { params }: { params: any }
 ) {
   try {
     const invoice = await getInvoiceByNumber(params.invoiceNumber);

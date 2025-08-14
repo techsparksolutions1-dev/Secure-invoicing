@@ -27,18 +27,16 @@ export const GenerateInvoiceFormSchema = z.object({
       message: "Service description must be under 2000 characters.",
     }),
   invoiceNumber: z.string().optional(),
-  dueDate: z
-    .string()
-    .min(1, { message: "Due date is required." })
-    .refine(
-      (date) => {
-        const selected = new Date(date);
-        const today = new Date();
-        today.setHours(0, 0, 0, 0);
-        return selected > today;
-      },
-      { message: "Due date must be in the future." }
-    ),
+
+  dueDate: z.date({ message: "Please select a valid date." }).refine(
+    (date) => {
+      const today = new Date();
+      today.setHours(0, 0, 0, 0);
+      return date > today;
+    },
+    { message: "Due date must be in the future." }
+  ),
+
   totalAmount: z
     .string()
     .min(1, { message: "Total amount is required." })

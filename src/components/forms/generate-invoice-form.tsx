@@ -14,6 +14,7 @@ import CustomInput from "@/components/common/custom-input";
 import CustomTextarea from "@/components/common/custom-textarea";
 import { Separator } from "../ui/separator";
 import { Button } from "../ui/button";
+import CustomCalendar from "../common/custom-calendar";
 
 import { GenerateClientId } from "@/utils/generate-client-id";
 import { GenerateInvoiceNumber } from "@/utils/generate-invoice-number";
@@ -40,7 +41,7 @@ function GenerateInvoiceForm() {
       serviceTitle: "",
       serviceDescription: "",
       invoiceNumber: "",
-      dueDate: "",
+      dueDate: new Date(),
       totalAmount: "",
     },
   });
@@ -60,7 +61,7 @@ function GenerateInvoiceForm() {
         serviceTitle: "",
         serviceDescription: "",
         invoiceNumber: data.invoiceNumber || GenerateInvoiceNumber(),
-        dueDate: "",
+        dueDate: new Date(),
         totalAmount: "",
       });
       // eslint-disable-next-line @typescript-eslint/no-unused-vars
@@ -73,7 +74,7 @@ function GenerateInvoiceForm() {
         serviceTitle: "",
         serviceDescription: "",
         invoiceNumber: GenerateInvoiceNumber(),
-        dueDate: "",
+        dueDate: new Date(),
         totalAmount: "",
       });
     }
@@ -87,7 +88,7 @@ function GenerateInvoiceForm() {
       !data.clientEmailAddress?.trim() ||
       !data.serviceTitle?.trim() ||
       !data.serviceDescription?.trim() ||
-      !data.dueDate?.trim() ||
+      !data.dueDate ||
       !data.totalAmount
     ) {
       toast.error("Missing required fields", {
@@ -269,11 +270,10 @@ function GenerateInvoiceForm() {
                 disabled
               />
 
-              <CustomInput
+              <CustomCalendar
                 control={control}
                 name="dueDate"
                 label="Due Date"
-                placeholder="Select payment due date (YYYY-MM-DD)"
               />
             </div>
 

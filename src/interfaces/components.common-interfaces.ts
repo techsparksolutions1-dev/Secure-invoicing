@@ -16,3 +16,10 @@ export interface CustomTextareaInterface<T extends FieldValues> {
   placeholder?: string;
   rows?: number;
 }
+
+export interface CustomCalendarProps<T extends FieldValues> {
+  control: Control<T>;
+  name: Path<T>;
+  label: string;
+  disabled?: boolean;
+}

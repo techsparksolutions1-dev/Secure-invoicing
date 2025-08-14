@@ -13,9 +13,7 @@ import { Skeleton } from "@/components/ui/skeleton";
 import { cn } from "@/lib/utils";
 
 import {
-  Trash2,
   AlertCircle,
-  CheckCircle2,
   Clock,
   RefreshCw,
   ExternalLink,
@@ -28,7 +26,6 @@ function ViewInvoicesPage() {
   const [invoices, setInvoices] = useState<Invoice[]>([]);
   const [filteredInvoices, setFilteredInvoices] = useState<Invoice[]>([]);
   const [loading, setLoading] = useState(true);
-  const [deleteLoading, setDeleteLoading] = useState<string | null>(null);
   const [currentPage, setCurrentPage] = useState(1);
   const [itemsPerPage] = useState(10);
   const [hoveredInvoice, setHoveredInvoice] = useState<string | null>(null);
@@ -58,58 +55,6 @@ function ViewInvoicesPage() {
     }
   };
 
-  const handleDeleteInvoice = async (invoiceNumber: string) => {
-    if (
-      !confirm(
-        "Are you sure you want to delete this invoice? This action cannot be undone."
-      )
-    ) {
-      return;
-    }
-
-    try {
-      setDeleteLoading(invoiceNumber);
-      const response = await fetch(
-        `/api/invoice/delete-invoice/${invoiceNumber}`,
-        {
-          method: "DELETE",
-        }
-      );
-
-      const result = await response.json();
-
-      if (result.success) {
-        setInvoices((prev) =>
-          prev.filter((inv) => inv.invoiceNumber !== invoiceNumber)
-        );
-        setFilteredInvoices((prev) =>
-          prev.filter((inv) => inv.invoiceNumber !== invoiceNumber)
-        );
-
-        const newTotalItems = filteredInvoices.length - 1;
-        const maxPage = Math.ceil(newTotalItems / itemsPerPage);
-        if (currentPage > maxPage && maxPage > 0) {
-          setCurrentPage(maxPage);
-        }
-
-        toast.success("Invoice Deleted", {
-          description: "Invoice has been permanently deleted.",
-          icon: <CheckCircle2 className="text-green-600" size={20} />,
-        });
-      } else {
-        throw new Error(result.error || "Failed to delete invoice");
-      }
-    } catch (error) {
-      console.error("Error deleting invoice:", error);
-      toast.error("Delete Failed", {
-        description: "Unable to delete invoice. Please try again.",
-        icon: <AlertCircle className="text-red-600" size={20} />,
-      });
-    } finally {
-      setDeleteLoading(null);
-    }
-  };
-
   const handleViewInvoice = (invoiceNumber: string) => {
     window.open(`/pay-invoice/${invoiceNumber}`, "_blank");
   };
@@ -129,7 +74,7 @@ function ViewInvoicesPage() {
     });
   };
 
-  const truncateDescription = (text: string, maxLength: number = 50) => {
+  const truncateDescription = (text: string, maxLength: number = 25) => {
     return text.length > maxLength
       ? `${text.substring(0, maxLength)}...`
       : text;
@@ -200,7 +145,7 @@ function ViewInvoicesPage() {
                 View invoices
               </h1>
               <p className="text-muted-foreground mt-2 max-md:hidden">
-                Manage & view all the unpaid invoices and their payment URLs.
+                View all the unpaid invoices and their payment URLs.
               </p>
             </div>
             <Button
@@ -269,6 +214,9 @@ function ViewInvoicesPage() {
                           Amount
                         </th>
                         <th className="p-4 font-medium text-muted-foreground whitespace-nowrap">
+                          Due Date
+                        </th>
+                        <th className="p-4 font-medium text-muted-foreground whitespace-nowrap">
                           Created
                         </th>
                         <th className="p-4 font-medium text-muted-foreground whitespace-nowrap">
@@ -298,7 +246,7 @@ function ViewInvoicesPage() {
                               </div>
                             </div>
                           </td>
-                          
+
                           <td className="p-4 whitespace-nowrap">
                             <div className="max-w-xs">
                               <div className="font-medium text-heading truncate">
@@ -333,6 +281,10 @@ function ViewInvoicesPage() {
                           </td>
 
                           <td className="p-4 text-sm text-muted-foreground whitespace-nowrap">
+                            {formatDate(invoice.dueDate)}
+                          </td>
+
+                          <td className="p-4 text-sm text-muted-foreground whitespace-nowrap">
                             {formatDate(invoice.createdAt)}
                           </td>
 
@@ -348,24 +300,6 @@ function ViewInvoicesPage() {
                                 title="View Invoice"
                               >
                                 <ExternalLink className="h-4 w-4" />
-                              </Button>
-                              <Button
-                                onClick={() =>
-                                  handleDeleteInvoice(invoice.invoiceNumber)
-                                }
-                                size="sm"
-                                variant="outline"
-                                className="h-8 w-8 p-0 hover:bg-destructive hover:text-destructive-foreground"
-                                title="Delete Invoice"
-                                disabled={
-                                  deleteLoading === invoice.invoiceNumber
-                                }
-                              >
-                                {deleteLoading === invoice.invoiceNumber ? (
-                                  <RefreshCw className="h-4 w-4 animate-spin" />
-                                ) : (
-                                  <Trash2 className="h-4 w-4" />
-                                )}
                               </Button>
                             </div>
                           </td>

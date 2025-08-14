@@ -8,7 +8,11 @@ import type {
   OnApproveData,
   OnApproveActions,
 } from "@paypal/paypal-js";
-import { PayPalButtons, PayPalScriptProvider } from "@paypal/react-paypal-js";
+import {
+  FUNDING,
+  PayPalButtons,
+  PayPalScriptProvider,
+} from "@paypal/react-paypal-js";
 import { useRouter } from "next/navigation";
 
 import {
@@ -244,7 +248,11 @@ function PayInvoicePage({
           {/* PAYPAL MERCHANT */}
           <div className="w-full flex justify-center">
             {isLoading ? (
-              <Skeleton className="h-[300px] w-full bg-muted" />
+              <div className="w-full flex flex-col gap-4">
+                <Skeleton className="h-[300px] w-full bg-muted" />
+                <Skeleton className="h-[300px] w-full bg-muted" />
+                <Skeleton className="h-[300px] w-full bg-muted" />
+              </div>
             ) : (
               <div className="w-[800px]">
                 {clientId && invoiceData ? (
@@ -256,9 +264,28 @@ function PayInvoicePage({
                     }}
                   >
                     <PayPalButtons
+                      style={{ layout: "horizontal" }}
+                      disabled={paymentProcessing}
+                      createOrder={createOrder}
+                      onApprove={onApprove}
+                    />
+
+                    <PayPalButtons
+                      fundingSource={FUNDING.CARD}
                       style={{
                         layout: "vertical",
+                        color: "black",
+                        label: "pay",
+                        height: 50,
                       }}
+                      disabled={paymentProcessing}
+                      createOrder={createOrder}
+                      onApprove={onApprove}
+                    />
+
+                    <PayPalButtons
+                      fundingSource={FUNDING.APPLEPAY}
+                      style={{ layout: "horizontal" }}
                       disabled={paymentProcessing}
                       createOrder={createOrder}
                       onApprove={onApprove}

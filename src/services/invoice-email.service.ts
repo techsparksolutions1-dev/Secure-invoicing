@@ -59,6 +59,7 @@ export const SendInvoiceReceiptToClient = async (
           font-weight: bold;
           letter-spacing: 1px;
           margin-bottom: 8px;
+          color: #4bf7ff;
         }
         
         .header-subtitle {
@@ -277,7 +278,6 @@ export const SendInvoiceReceiptToClient = async (
       <div class="email-container">
         <div class="header">
           <div class="logo">CODE AURA</div>
-          <div class="header-subtitle">Professional Development Services</div>
           <div class="success-badge">✓ PAYMENT SUCCESSFUL</div>
         </div>
         
@@ -412,7 +412,7 @@ export const SendInvoiceNotificationToAdmin = async (
         }
         
         .header {
-          background: linear-gradient(135deg, #00d1a0 0%, #059669 100%);
+          background: #050b17;
           color: white;
           padding: 25px;
           text-align: center;

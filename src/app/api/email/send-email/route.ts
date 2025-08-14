@@ -38,7 +38,7 @@ export async function POST(request: NextRequest) {
     // });
 
     const info = await transporter.sendMail({
-      from: `Brand Revival Hub® <${process.env.EMAIL_USER}>`,
+      from: `Code Aura <${process.env.EMAIL_USER}>`,
       to,
       subject,
       html,

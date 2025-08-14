@@ -134,7 +134,7 @@ function PaymentSuccessPage() {
               ))}
             </div>
           ) : invoiceData ? (
-            <div className="grid md:grid-cols-2 gap-8">
+            <div className="grid md:grid-cols-2 gap-8 md:text-base text-sm">
               <div className="space-y-6">
                 <div>
                   <h3 className="font-semibold text-heading mb-3">From:</h3>
@@ -163,7 +163,7 @@ function PaymentSuccessPage() {
 
               {/* RIGHT COLUMN - Invoice Details */}
               <div className="space-y-6">
-                <div>
+                <div className="md:text-base text-sm">
                   <h3 className="font-semibold text-heading mb-3">
                     Payment Details:
                   </h3>
@@ -236,7 +236,7 @@ function PaymentSuccessPage() {
             <h3 className="font-semibold text-green-800 mb-2">
               Payment Confirmed
             </h3>
-            <p className="text-green-700 text-sm">
+            <p className="text-green-700 md:text-sm text-xs">
               Your payment has been successfully processed and this invoice is
               now marked as PAID. A confirmation email has been sent to your
               registered email address.
